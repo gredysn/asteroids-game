@@ -36,3 +36,5 @@
 
 # Extras
 obj/**
+
+.DS_Store
