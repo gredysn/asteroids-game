@@ -1,5 +1,6 @@
 #include "ofApp.h"
-
+// added to make the pause case insensitive
+#include <cctype>
 //--------------------------------------------------------------
 void ofApp::setup() {
      ofSetFrameRate(60);
@@ -38,6 +39,11 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
+    // isPaused
+    if(isPaused){
+        return;
+    }
+
     float dt = ofGetLastFrameTime();
 
     if(gameState == GAME_OVER) {
@@ -83,9 +89,15 @@ void ofApp::draw() {
     }
 
     else if (gameState == PLAYING) {
-     if (backgroundImage.isAllocated()) {
-        backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
+        //when paused i want the screen to be clear or just a black background
+        if(isPaused){
+        ofClear(0, 0, 0, 255); 
     } else {
+
+        if (backgroundImage.isAllocated()){
+        backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
+
+    }else{
         ofClear(0, 0, 0, 255); 
     }
 
@@ -105,13 +117,22 @@ void ofApp::draw() {
 
     ofSetColor(255);
     ofDrawBitmapString("Press SPACEBAR to shoot", 10, 65);
-
     }
+}
 
     else if (gameState == GAME_OVER) {
         ofExit();
         
         return;
+    }
+
+    // isPaused
+    if(isPaused){
+        ofSetColor(255);
+        ofDrawBitmapString("=== GAME PAUSED ===", ofGetWidth()/2 - 60, ofGetHeight()/2 - 20);
+        ofDrawBitmapString("Press P to Resume", ofGetWidth()/2 - 60, ofGetHeight()/2 + 0);
+        ofDrawBitmapString("Press R to Restart", ofGetWidth()/2 - 60, ofGetHeight()/2 + 20);
+        ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
     }
 
   
@@ -136,9 +157,24 @@ void ofApp::keyPressed(int key) {
         shoot();
         fireSound.play();
     }
+    //new if statement for pausing , restarting and exiting
+    if(gameState == PLAYING && tolower(key) == 'p'){
+        isPaused = !isPaused;
+        music.setPaused(isPaused);
+    }
+
+        if(isPaused){
+            if(tolower(key) == 'r'){
+                restartGame(); 
+            }
+            if(tolower(key) == 'e'){
+                ofExit(); 
+            }
+        }
+    }
 }
 
-}
+
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
@@ -248,5 +284,23 @@ void ofApp::checkCollisions() {
             }
         }
     }
+    
 }
+// new function restartGame()
+void ofApp::restartGame(){
+asteroids.clear();
+bullets.clear();
+explosions.clear();
 
+ship.setPosition(ofVec2f(ofGetWidth()/2, ofGetHeight()/2));
+ship.setVelocity(ofVec2f(0,0));
+ship.setAngle(0);
+
+lives = 3;
+score = 0;
+isPaused = false;
+
+music.setPaused(false);
+music.play();
+
+}
