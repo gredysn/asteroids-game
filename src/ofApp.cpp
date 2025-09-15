@@ -117,6 +117,9 @@ void ofApp::draw() {
 
     ofSetColor(255);
     ofDrawBitmapString("Press SPACEBAR to shoot", 10, 65);
+    
+    //Draw score
+    ofDrawBitmapString("Score:" + ofToString(score), 10, 20);
     }
 }
 
@@ -147,9 +150,9 @@ void ofApp::keyPressed(int key) {
         }
     }
     else if(gameState == PLAYING){
-    if (key == OF_KEY_LEFT)  ship.rotateLeft();
-    if (key == OF_KEY_RIGHT) ship.rotateRight();
-    if (key == OF_KEY_UP && gameState != GAME_OVER){
+    if (key == 'a')  ship.rotateLeft();
+    if (key == 'd') ship.rotateRight();
+    if (key == 'w' && gameState != GAME_OVER){
         ship.startThrust();
         thrustSound.play();
     }
@@ -178,8 +181,8 @@ void ofApp::keyPressed(int key) {
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
-    if (key == OF_KEY_LEFT || key == OF_KEY_RIGHT) ship.stopRotating();
-    if (key == OF_KEY_UP) {
+    if (key == 'a' || key == 'd') ship.stopRotating();
+    if (key == 'w') {
         ship.stopThrust();
         thrustSound.stop();
     }

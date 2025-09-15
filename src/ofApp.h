@@ -46,7 +46,8 @@ private:
 	float lastShotTime = 0.0f;      // last time a bullet was fired
     float shotCooldown = 0.1f;      // minimum seconds between shots
 	vector<Explosion> explosions;
-	int lives = 1;
+	int lives = 3;
+	//int lives = 10;
 	ofImage backgroundImage;
 	ofImage titleScreen;
 	ofSoundPlayer music;
