@@ -117,7 +117,13 @@ void ofApp::draw() {
 
     ofSetColor(255);
     ofDrawBitmapString("Press SPACEBAR to shoot", 10, 65);
-    
+
+    //if statement for displaying mute/unmute
+    if(isMuted){
+        ofDrawBitmapString("Press M to Mute", 10, 80);
+    }else{
+        ofDrawBitmapString("Press M to Unmute", 10, 80);
+    }
     //Draw score
     ofDrawBitmapString("Score:" + ofToString(score), 10, 20);
     }
@@ -159,6 +165,11 @@ void ofApp::keyPressed(int key) {
     if (key == ' ') {
         shoot();
         fireSound.play();
+    }
+    //new if statement for muting/unmuting
+    if(tolower(key) == 'm'){
+        isMuted = !isMuted;
+        music.setPaused(isMuted);
     }
     //new if statement for pausing , restarting and exiting
     if(gameState == PLAYING && tolower(key) == 'p'){

@@ -33,8 +33,10 @@ private:
 	vector<Bullet> bullets;
 
     int score;
-	//new variable for pause state phase 1
+	//new variable for pause state phase 2
 	bool isPaused = false;
+	//new variable for Muting 
+	bool isMuted = false;
 	float invincibleDuration = 2.0f;
 	float lastAsteroidSpawnTime = 0.0f;
 	float asteroidSpawnInterval = 5.0f; // spawn a new asteroid every 5 seconds
