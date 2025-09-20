@@ -35,6 +35,13 @@ void ofApp::setup() {
     crashSound.setMultiPlay(false);
 
     score = 0;
+
+    highScore = 0; //Uptades high score if it gets beaten
+    ofFile file("highscore.txt");
+    
+    if (file.exists()){   //Saves the new highscore to file
+        file>> highScore;    
+    }
 }
 
 //--------------------------------------------------------------
@@ -80,7 +87,7 @@ void ofApp::update() {
 
 
 //--------------------------------------------------------------
-void ofApp::draw() {
+void ofApp::draw(){
 
     if (gameState == TITLE) {
     if (titleScreen.isAllocated()) {
@@ -124,16 +131,22 @@ void ofApp::draw() {
     }else{
         ofDrawBitmapString("Press M to Unmute", 10, 80);
     }
-    //Draw score
+    //Draw score and the high sccore
     ofDrawBitmapString("Score:" + ofToString(score), 10, 20);
+    ofDrawBitmapString("High Score:" + ofToString(highScore), 10, 40);
     }
 }
 
     else if (gameState == GAME_OVER) {
-        ofExit();
-        
-        return;
-    }
+        ofBackground(0);
+        ofSetColor(255);
+        ofDrawBitmapString("=== GAME OVER ===", ofGetWidth()/2 - 60, ofGetHeight()/2 - 20);
+        ofDrawBitmapString("Final Score: " + ofToString(score), ofGetWidth()/2 - 60, ofGetHeight()/2 + 0);
+        ofDrawBitmapString("High Score: " + ofToString(highScore), ofGetWidth()/2 - 60, ofGetHeight()/2 + 20);
+        ofDrawBitmapString("Press R to Restart", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
+        ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 60);
+}
+    
 
     // isPaused
     if(isPaused){
@@ -144,9 +157,7 @@ void ofApp::draw() {
         ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
     }
 
-  
 }
-
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     if(gameState == TITLE){
@@ -154,6 +165,15 @@ void ofApp::keyPressed(int key) {
             music.play();
             gameState = PLAYING;
         }
+    }
+    if (gameState == GAME_OVER) {
+        if (tolower(key) == 'r') {
+            restartGame();
+        }
+        if (tolower(key) == 'e') {
+            ofExit();
+        }
+        return; // stop here
     }
     else if(gameState == PLAYING){
     if (key == 'a')  ship.rotateLeft();
@@ -258,6 +278,13 @@ void ofApp::checkCollisions() {
         } else {
             gameState = GAME_OVER;
             music.stop();
+
+            if(score > highScore){
+                highScore = score;  //Updates the high score if beaten
+
+                ofFile file("highscore.txt", ofFile::WriteOnly); //Saves the new high score to file
+                file << highScore;
+            }
         }
 
         return;
@@ -313,6 +340,7 @@ ship.setAngle(0);
 lives = 3;
 score = 0;
 isPaused = false;
+gameState = PLAYING;
 
 music.setPaused(false);
 music.play();

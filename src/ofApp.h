@@ -33,6 +33,7 @@ private:
 	vector<Bullet> bullets;
 
     int score;
+	int highScore; //variable for the high score
 	//new variable for pause state phase 2
 	bool isPaused = false;
 	//new variable for Muting 
