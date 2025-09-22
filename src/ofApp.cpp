@@ -42,7 +42,10 @@ void ofApp::setup() {
     if (file.exists()){   //Saves the new highscore to file
         file>> highScore;    
     }
-}
+    //adding the shipSprite
+    shipSprite.load("images/spaceshipspritepa1.png");
+    shipSprite.setAnchorPercent(0.5f, 0.5f);
+}   
 
 //--------------------------------------------------------------
 void ofApp::update() {
@@ -123,17 +126,54 @@ void ofApp::draw(){
     }       
 
     ofSetColor(255);
-    ofDrawBitmapString("Press SPACEBAR to shoot", 10, 65);
+    ofDrawBitmapString("Press SPACEBAR to shoot", 10, 58);
 
     //if statement for displaying mute/unmute
     if(isMuted){
-        ofDrawBitmapString("Press M to Mute", 10, 80);
+        ofDrawBitmapString("Press M to Mute", 10, 75);
     }else{
-        ofDrawBitmapString("Press M to Unmute", 10, 80);
+        ofDrawBitmapString("Press M to Unmute", 10, 75);
     }
     //Draw score and the high sccore
     ofDrawBitmapString("Score:" + ofToString(score), 10, 20);
     ofDrawBitmapString("High Score:" + ofToString(highScore), 10, 40);
+   
+    //new shipSprites representing the lives
+    float hudMargin = 10;
+    float shipSpriteSize = 25;
+    float shipSpriteGap = 6;
+    float xStart = hudMargin + shipSpriteSize / 2;
+    float yStart = 95;
+
+    //if statements for when lives are lost
+    if(lives >= 1){
+        ofPushMatrix();
+        ofTranslate(xStart, yStart);
+        float scale = shipSpriteSize / (float)shipSprite.getWidth();
+        ofScale(scale, scale);
+        shipSprite.draw(0, 0);
+        ofPopMatrix();
+    }
+
+    if(lives >= 2){
+        ofPushMatrix();
+        ofTranslate(xStart + (shipSpriteSize + shipSpriteGap), yStart);
+        float scale = shipSpriteSize / (float)shipSprite.getWidth();
+        ofScale(scale, scale);
+        shipSprite.draw(0, 0);
+        ofPopMatrix();
+    }
+
+    if(lives >= 3){
+        ofPushMatrix();
+        ofTranslate(xStart + 2 * (shipSpriteSize + shipSpriteGap), yStart);
+        float scale = shipSpriteSize / (float)shipSprite.getWidth();
+        ofScale(scale, scale);
+        shipSprite.draw(0, 0);
+        ofPopMatrix();
+    }
+    
+
     }
 }
 

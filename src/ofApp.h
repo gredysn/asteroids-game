@@ -51,6 +51,8 @@ private:
 	vector<Explosion> explosions;
 	int lives = 3;
 	//int lives = 10;
+	//adding the shipSprite
+	ofImage shipSprite;
 	ofImage backgroundImage;
 	ofImage titleScreen;
 	ofSoundPlayer music;
