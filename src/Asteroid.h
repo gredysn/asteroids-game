@@ -21,4 +21,7 @@ private:
     int size; // 3 = large, 2 = medium, 1 = small
     vector<ofVec2f> shape;
     
+    //new float for the rotation
+    float angle;
+    float angularSpeed;
 };

@@ -5,6 +5,14 @@ Asteroid::Asteroid() {
     velocity.set(ofRandom(-2, 2), ofRandom(-2, 2));
     size = 3;
     radius = size * 20;
+
+    //new rotation
+    angle = ofRandom(0, 360);
+    //different speeds for each asteroid
+    if(size == 3) angularSpeed = ofRandom(-360, 360);
+    if(size == 2) angularSpeed = ofRandom(-150, 150);
+    if(size == 1) angularSpeed = ofRandom(-180, 180);
+
 }
 
 Asteroid::Asteroid(ofVec2f pos, int s) {
@@ -12,6 +20,12 @@ Asteroid::Asteroid(ofVec2f pos, int s) {
     velocity.set(ofRandom(-2, 2), ofRandom(-2, 2));
     size = s;
     radius = size * 20;
+    //random rotation for each asteroid
+    angle = ofRandom(0, 360);
+    if(size == 3) angularSpeed = ofRandom(-90, 90);
+    if(size == 2) angularSpeed = ofRandom(-150, 150);
+    if(size == 1) angularSpeed = ofRandom(-180, 180);
+
     int points = 8 + ofRandom(3); // 8-10 points
     for (int i = 0; i < points; i++) {
         float angle = ofMap(i, 0, points, 0, TWO_PI);
@@ -33,6 +47,11 @@ void Asteroid::update(float dt) {
 
     position += velocity;
 
+    //updating rotating angle
+    angle += angularSpeed * dt;
+     if(angle > 360) angle -= 360;
+     if(angle < 0) angle += 360;
+    
     // Wrap screen
     if (position.x < 0) position.x += ofGetWidth();
     if (position.x > ofGetWidth()) position.x -= ofGetWidth();
@@ -43,6 +62,7 @@ void Asteroid::update(float dt) {
 void Asteroid::draw() const {
     ofPushMatrix();
     ofTranslate(position);
+   ofRotateDeg(angle);//applying the rotation
 
         ofSetColor(250);
         ofBeginShape();

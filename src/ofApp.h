@@ -44,13 +44,13 @@ private:
     void spawnAsteroid(float x = -1, float y = -1, int size = 3);
     void checkCollisions();
 	void shoot();
-	//new function for restarting the game
-	void restartGame();
+	void restartGame(); //new function for restarting the game
 	float lastShotTime = 0.0f;      // last time a bullet was fired
     float shotCooldown = 0.1f;      // minimum seconds between shots
 	vector<Explosion> explosions;
 	int lives = 3;
-	//int lives = 10;
+	int maxLives = 5;
+	int lifeAward = 1500; // award for a life when scored
 	//adding the shipSprite
 	ofImage shipSprite;
 	ofImage backgroundImage;

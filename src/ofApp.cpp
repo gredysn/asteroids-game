@@ -85,6 +85,10 @@ void ofApp::update() {
             explosions[i].update(dt);
             if (explosions[i].isDead()) explosions.erase(explosions.begin() + i);
         }
+        //updates rotation and the position
+        for (auto &a : asteroids) {
+             a.draw();  
+}
     }
 }
 
@@ -151,8 +155,16 @@ void ofApp::draw(){
         ofTranslate(xStart, yStart);
         float scale = shipSpriteSize / (float)shipSprite.getWidth();
         ofScale(scale, scale);
+        //flashing lights when 1 remaining
+        if(lives == 1 && int(ofGetElapsedTimef()*2) % 2 == 0){
+            ofSetColor(255, 0, 0);
+        }else{
+            ofSetColor(255);
+        }
         shipSprite.draw(0, 0);
         ofPopMatrix();
+
+        ofSetColor(255); //resets color
     }
 
     if(lives >= 2){
@@ -172,7 +184,24 @@ void ofApp::draw(){
         shipSprite.draw(0, 0);
         ofPopMatrix();
     }
+    //when the award lives are gained 
+    if(lives >=4){
+        ofPushMatrix();
+        ofTranslate(xStart + 3 * (shipSpriteSize + shipSpriteGap), yStart);
+        float scale = shipSpriteSize / (float)shipSprite.getWidth();
+        ofScale(scale, scale);
+        shipSprite.draw(0, 0);
+        ofPopMatrix();
+    }  
+    if(lives >=5){
+        ofPushMatrix();
+        ofTranslate(xStart + 4 * (shipSpriteSize + shipSpriteGap), yStart);
+        float scale = shipSpriteSize / (float)shipSprite.getWidth();
+        ofScale(scale, scale);
+        shipSprite.draw(0, 0);
+        ofPopMatrix();
     
+    }
 
     }
 }
@@ -358,6 +387,11 @@ void ofApp::checkCollisions() {
                 // increase score
                 score += 100;
 
+                if(score >= lifeAward && lives < maxLives){
+                    lives++;
+                    lifeAward += 1500;
+                }
+
                 //play break sound
                 explosionSound.play();
 
@@ -381,6 +415,8 @@ lives = 3;
 score = 0;
 isPaused = false;
 gameState = PLAYING;
+
+lifeAward = 1500; //reset milestone
 
 music.setPaused(false);
 music.play();

@@ -38,3 +38,6 @@
 obj/**
 
 .DS_Store
+
+#highscore
+highscore.txt
