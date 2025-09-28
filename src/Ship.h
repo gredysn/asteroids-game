@@ -6,7 +6,7 @@ public:
     Ship();
 
     void update(float dt);
-    void draw();
+    void draw(int score);
 
     void rotateLeft();
     void rotateRight();

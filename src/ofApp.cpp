@@ -115,7 +115,7 @@ void ofApp::draw(){
         ofClear(0, 0, 0, 255); 
     }
 
-      ship.draw();
+      ship.draw(score);
 
     // Draw bullets
     ofSetColor(255, 255, 255);

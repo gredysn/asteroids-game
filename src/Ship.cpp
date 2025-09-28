@@ -50,7 +50,7 @@ void Ship::update(float dt) {
 
 
 //--------------------------------------------------------------
-void Ship::draw() {
+void Ship::draw(int score) {
     ofPushMatrix();
     ofTranslate(position);
     ofRotateDeg(angle);
@@ -63,10 +63,19 @@ void Ship::draw() {
             return; 
         }
     }
-        ofSetColor(255);
-        ofDrawTriangle(0, -10, -7, 10, 7, 10);
-
-    ofPopMatrix();
+    
+    //if statement so the ship changes color
+    if(score >= 4500){
+        ofSetColor(255, 0, 0);
+    }else if(score >= 3000){
+        ofSetColor(0, 255, 0);
+    }else if(score >= 1500){
+        ofSetColor(0, 0, 255);
+    }else{
+        ofSetColor(255, 255, 255);
+    }
+     ofDrawTriangle(0, -10, -7, 10, 7, 10);
+     ofPopMatrix();
 }
 
 //--------------------------------------------------------------
