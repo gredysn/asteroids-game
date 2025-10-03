@@ -8,13 +8,13 @@ void ofApp::setup() {
     for (int i = 0; i < 3; i++) {
         spawnAsteroid();
     }
-    backgroundImage.load("images/asteroid_background.png");
+    backgroundImage.load("images/star_wars.png");
 
     gameState = TITLE;
 
+    gameOverScreen.load("images/game_over.png");
     titleScreen.load("images/asteroids_title.png");
-
-    if (!music.load("music/asteroid_song.mp3")) {
+    if (!music.load("music/STARWARS.mp3")) {
         ofLogError() << "Failed to load asteroid_song.mp3!";
     } else if(gameState == PLAYING){
         music.setLoop(true);
@@ -97,28 +97,28 @@ void ofApp::update() {
 void ofApp::draw(){
 
     if (gameState == TITLE) {
-    if (titleScreen.isAllocated()) {
+        if (titleScreen.isAllocated()) {
         titleScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
-    }
+        }
     }
 
     else if (gameState == PLAYING) {
         //when paused i want the screen to be clear or just a black background
         if(isPaused){
         ofClear(0, 0, 0, 255); 
-    } else {
+        } else {
 
-        if (backgroundImage.isAllocated()){
-        backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
+            if (backgroundImage.isAllocated()){
+            backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
 
-    }else{
-        ofClear(0, 0, 0, 255); 
-    }
+            }else{
+                ofClear(0, 0, 0, 255); 
+            }
 
-      ship.draw(score);
+            ship.draw(score);
 
     // Draw bullets
-    ofSetColor(255, 255, 255);
+    ofSetColor(255, 0, 0);
     for (auto &b : bullets) ofDrawCircle(b.position, 3);
 
     // Draw asteroids
@@ -207,13 +207,14 @@ void ofApp::draw(){
 }
 
     else if (gameState == GAME_OVER) {
-        ofBackground(0);
+    
+        if (gameOverScreen.isAllocated()) {
+        // Draw the full-screen image
+        gameOverScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
         ofSetColor(255);
-        ofDrawBitmapString("=== GAME OVER ===", ofGetWidth()/2 - 60, ofGetHeight()/2 - 20);
-        ofDrawBitmapString("Final Score: " + ofToString(score), ofGetWidth()/2 - 60, ofGetHeight()/2 + 0);
-        ofDrawBitmapString("High Score: " + ofToString(highScore), ofGetWidth()/2 - 60, ofGetHeight()/2 + 20);
-        ofDrawBitmapString("Press R to Restart", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
-        ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 60);
+        ofDrawBitmapString("Final Score: " + ofToString(score), ofGetWidth()/2 - 100, ofGetHeight()/2 + 60);
+        ofDrawBitmapString("High Score: " + ofToString(highScore), ofGetWidth()/2 - 100, ofGetHeight()/2 + 80);
+        ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 100, ofGetHeight()/2 + 100);
 }
     
 
@@ -226,6 +227,7 @@ void ofApp::draw(){
         ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
     }
 
+}
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {

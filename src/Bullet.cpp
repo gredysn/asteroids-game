@@ -26,6 +26,6 @@ void Bullet::update(float dt) {
 }
 
 void Bullet::draw() {
-    ofSetColor(255);
+    ofSetColor(255, 0, 0);
     ofDrawCircle(position, 2);
 }

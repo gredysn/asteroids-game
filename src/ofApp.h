@@ -55,6 +55,7 @@ private:
 	ofImage shipSprite;
 	ofImage backgroundImage;
 	ofImage titleScreen;
+	ofImage gameOverScreen;
 	ofSoundPlayer music;
 	ofSoundPlayer thrustSound;
 	ofSoundPlayer fireSound;

@@ -62,9 +62,15 @@ void Asteroid::update(float dt) {
 void Asteroid::draw() const {
     ofPushMatrix();
     ofTranslate(position);
-   ofRotateDeg(angle);//applying the rotation
+    ofRotateDeg(angle);//applying the rotation
+    
+    // Bonus
+    // cycle hue based on time
+    ofColor dynamicColor;
+    dynamicColor.setHsb(fmod(ofGetElapsedTimef() * 40 + position.x, 255), 200, 255);
+    ofSetColor(dynamicColor);
 
-        ofSetColor(250);
+        //ofSetColor(250);
         ofBeginShape();
         for (auto &v : shape) {
             ofVertex(v.x, v.y);
