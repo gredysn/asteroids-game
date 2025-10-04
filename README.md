@@ -31,3 +31,8 @@ If a partner has no commits in the repositories, they will receive a 0.
 
 ## Student Notes
 If you have any bonus specs, bonus or any details the TA's should know, you should include it here:
+- new background
+- star wars music
+- asteroids change color
+- laser sounds
+- game over state

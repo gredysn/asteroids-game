@@ -106,6 +106,13 @@ void ofApp::draw(){
         //when paused i want the screen to be clear or just a black background
         if(isPaused){
         ofClear(0, 0, 0, 255); 
+        ofSetColor(255);
+        ofDrawBitmapString("=== GAME PAUSED ===", ofGetWidth()/2 - 60, ofGetHeight()/2 - 20);
+        ofDrawBitmapString("Press P to Resume", ofGetWidth()/2 - 60, ofGetHeight()/2 + 0);
+        ofDrawBitmapString("Press R to Restart", ofGetWidth()/2 - 60, ofGetHeight()/2 + 20);
+        ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
+        return;
+        
         } else {
 
             if (backgroundImage.isAllocated()){
@@ -216,16 +223,6 @@ void ofApp::draw(){
         ofDrawBitmapString("High Score: " + ofToString(highScore), ofGetWidth()/2 - 100, ofGetHeight()/2 + 80);
         ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 100, ofGetHeight()/2 + 100);
 }
-    
-
-    // isPaused
-    if(isPaused){
-        ofSetColor(255);
-        ofDrawBitmapString("=== GAME PAUSED ===", ofGetWidth()/2 - 60, ofGetHeight()/2 - 20);
-        ofDrawBitmapString("Press P to Resume", ofGetWidth()/2 - 60, ofGetHeight()/2 + 0);
-        ofDrawBitmapString("Press R to Restart", ofGetWidth()/2 - 60, ofGetHeight()/2 + 20);
-        ofDrawBitmapString("Press E to Exit", ofGetWidth()/2 - 60, ofGetHeight()/2 + 40);
-    }
 
 }
 }
